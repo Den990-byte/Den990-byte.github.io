@@ -17,11 +17,11 @@ def get_questions():
         
         conn = mysql.connector.connect(
             host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com", 
-            port=21061,  # Add port
+            port=21061,
             user="avnadmin",         
             password="AVNS_EAXcIoeolpK4AaywvrL",         
             database="testwebsite",
-            ssl_ca='/path/to/your/ca-cert.pem'  # Adjust the path
+            ssl_ca='/Users/yourusername/Downloads/ca-cert.pem'  # Adjust the path
         )
         cursor = conn.cursor(dictionary=True)
 
@@ -50,7 +50,7 @@ def get_questions():
         
         cursor.execute(query, params)
         rows = cursor.fetchall()
-        cursor.close()  # Close the cursor
+        cursor.close()
         conn.close()
 
         questions = []
