@@ -14,6 +14,8 @@ def get_questions():
     try:
         subject = request.args.get('subject')
         education_level = request.args.get('education_level')
+
+        print("testwebsite")
         
         conn = mysql.connector.connect(
             host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061",
