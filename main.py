@@ -16,7 +16,7 @@ def get_questions():
         education_level = request.args.get('education_level')
         
         conn = mysql.connector.connect(
-            host="localhost",
+            host="https://den990-byte.github.io/",
             user="root",         
             password="",         
             database="test website"  
