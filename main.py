@@ -16,13 +16,14 @@ def get_questions():
         education_level = request.args.get('education_level')
         
         conn = mysql.connector.connect(
-            host="https://dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com", 
+            host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com", 
+            port=21061,  # Add port
             user="avnadmin",         
             password="AVNS_EAXcIoeolpK4AaywvrL",         
-            database="testwebsite"  
+            database="testwebsite",
+            ssl_ca='/path/to/your/ca-cert.pem'  # Adjust the path
         )
         cursor = conn.cursor(dictionary=True)
-        
 
         where_conditions = []
         params = []
@@ -49,6 +50,7 @@ def get_questions():
         
         cursor.execute(query, params)
         rows = cursor.fetchall()
+        cursor.close()  # Close the cursor
         conn.close()
 
         questions = []
