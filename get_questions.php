@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Database connection
 $host = 'https://den990-byte.github.io/';
-$dbname = 'test website'; // Your database name
+$dbname = 'test_website'; // Your database name
 $username = 'root'; // Your database username
 $password = ''; // Your database password
 
