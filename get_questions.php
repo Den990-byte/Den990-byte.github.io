@@ -10,12 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Database connection
 $host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061';
-$dbname = 'test website'; // Your database name
+$dbname = 'testwebsite'; // Your database name
 $username = 'avnadmin'; // Your database username
 $password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
+alert($dbname);
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    alert($pdo);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     http_response_code(500);
