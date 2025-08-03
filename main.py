@@ -16,10 +16,10 @@ def get_questions():
         education_level = request.args.get('education_level')
         
         conn = mysql.connector.connect(
-            host="https://den990-byte.github.io/",
-            user="root",         
-            password="",         
-            database="test_website"  
+            host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061",
+            user="avnadmin",         
+            password="AVNS_EAXcIoeolpK4AaywvrL",         
+            database="testwebsite"  
         )
         cursor = conn.cursor(dictionary=True)
         
