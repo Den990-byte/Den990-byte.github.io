@@ -13,7 +13,9 @@ $host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061';
 $dbname = 'testwebsite'; // Your database name
 $username = 'avnadmin'; // Your database username
 $password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
-alert($dbname);
+testwebsite
+$message = "wrong answer";
+echo "<script type='text/javascript'>alert('$message');</script>";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
