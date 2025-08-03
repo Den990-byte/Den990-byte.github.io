@@ -20,7 +20,7 @@ def get_questions():
             port=21061,
             user="avnadmin",         
             password="AVNS_EAXcIoeolpK4AaywvrL",         
-            database="testwebsite",
+            database="defaultdb",
             ssl_ca='/Users/yourusername/Downloads/ca-cert.pem'  # Adjust the path
         )
         cursor = conn.cursor(dictionary=True)
