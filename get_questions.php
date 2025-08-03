@@ -7,9 +7,10 @@ header('Access-Control-Allow-Headers: Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
+$caCertPath = 'C:\\Users\\Dennis\\Downloads\\ca-cert.pem';
 
 // Database connection
-$host = 'https://dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com'; //:21061
+$host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com'; //:21061
 $dbname = 'testwebsite'; // Your database name
 $username = 'avnadmin'; // Your database username
 $password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
@@ -18,8 +19,9 @@ $message = "testwebsite";
 echo "<script type='text/javascript'>alert('$message');</script>";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    alert($pdo);
+    $pdo = new PDO("mysql:host=$host;port=21061;dbname=$dbname;charset=utf8mb4", $username, $password, [
+        PDO::MYSQL_ATTR_SSL_CA => $caCertPath,
+    ]);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     http_response_code(500);
