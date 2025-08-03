@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'test_website';
+// Database connection
+$host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061';
+$dbname = 'testwebsite'; // Your database name
+$username = 'avnadmin'; // Your database username
+$password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $username, $password);
