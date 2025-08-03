@@ -19,7 +19,7 @@ def get_questions():
             host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061",
             user="avnadmin",         
             password="AVNS_EAXcIoeolpK4AaywvrL",         
-            database="test website"  
+            database="testwebsite"  
         )
         cursor = conn.cursor(dictionary=True)
         
