@@ -441,13 +441,14 @@
     <script>
         async function fetchQuestionsFromDatabase(subject, educationLevel) {
     try {
+        showCustomAlert('fetchQuestionsFromDatabase : '+ subject);
         // Build URL with query parameters
         const params = new URLSearchParams();
         if (subject) params.append('subject', subject);
         if (educationLevel) params.append('education_level', educationLevel);
         
         const url = `/get-questions?${params.toString()}`;
-        alert('url = ' + url)
+        showCustomAlert('url : ' + url);
         const response = await fetch(url); // Flask endpoint with parameters
         if (!response.ok) throw new Error("Failed to fetch questions");
 
