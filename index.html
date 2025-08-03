@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB Test Kemampuan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'primary-dark': '#4B4BC4'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .timer-warning {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .gift-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .gift-card-english {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .gift-card-math {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .gift-card-indonesia {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .gift-card-physics {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .gift-card-coming-soon {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Login Page -->
+    <div id="loginPage" class="container mx-auto px-4 py-8 max-w-md">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">TEST PENGETAHUAN</h1>
+            <p class="text-gray-600 dark:text-gray-300">Uji Kemampuan dan Kepintaran Anda</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 fade-in">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Masuk atau Daftar</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-sm">Masukkan nama Anda untuk melanjutkan</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Lengkap</label>
+                    <input type="text" id="loginName" placeholder="Masukkan nama Anda" 
+                           class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <button onclick="loginUser()" 
+                        class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mt-6">
+                    Masuk
+                </button>
+                
+                <div class="text-center mt-4">
+                    <button onclick="showLeaderboard()" 
+                            class="text-primary hover:text-primary-dark font-medium">
+                        Lihat Papan Peringkat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="hidden container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Dashboard</h1>
+            <p id="welcomeText" class="text-gray-600 dark:text-gray-300"></p>
+            <button onclick="logoutUser()" class="mt-2 text-red-500 hover:text-red-600 font-medium">Keluar</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Mulai Tes Baru</h3>
+                <button onclick="startNewTest()" 
+                        class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+                    Mulai Tes
+                </button>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Statistik Anda</h3>
+                <div id="userStats" class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    <div>Total Tes: <span id="totalTests">0</span></div>
+                    <div>Rata-rata Skor: <span id="avgScore">0%</span></div>
+                    <div>Skor Tertinggi: <span id="bestScore">0%</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Riwayat Tes Anda</h3>
+            <div id="userHistory" class="space-y-3 max-h-64 overflow-y-auto"></div>
+        </div>
+        
+        <div class="text-center">
+            <button onclick="showLeaderboard()" 
+                    class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200">
+                Lihat Papan Peringkat
+            </button>
+        </div>
+    </div>
+
+    <!-- Leaderboard Page -->
+    <div id="leaderboardPage" class="hidden container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Papan Peringkat</h1>
+            <p class="text-gray-600 dark:text-gray-300">Top 10 Skor Tertinggi Sepanjang Masa</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex space-x-4 mb-4">
+                <select id="leaderboardSubject" onchange="updateLeaderboard()" 
+                        class="px-4 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+                    <option value="all">Semua Mata Pelajaran</option>
+                    <option value="english">Bahasa Inggris</option>
+                    <option value="math">Matematika</option>
+                </select>
+                <select id="leaderboardEducation" onchange="updateLeaderboard()" 
+                        class="px-4 py-2 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white">
+                    <option value="all">Semua Tingkat</option>
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA">SMA</option>
+                </select>
+            </div>
+            
+            <div id="leaderboardContent" class="space-y-3"></div>
+        </div>
+        
+        <div class="text-center">
+            <button onclick="goBackFromLeaderboard()" 
+                    class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors duration-200">
+                Kembali
+            </button>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="homePage" class="hidden container mx-auto px-4 py-8 max-w-md">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">TEST PENGETAHUAN</h1>
+            <p class="text-gray-600 dark:text-gray-300">Uji Kemampuan dan Kepintaran Anda</p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 fade-in">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Tes Pengetahuan</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-sm">20 soal • 30 menit</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Lengkap</label>
+                    <input type="text" id="studentName" placeholder="Masukkan nama Anda" 
+                           class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tingkat Pendidikan</label>
+                    <select id="educationLevel" 
+                            class="w-full px-4 py-3 text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-gray-700 dark:text-white">
+                        <option value="">Pilih tingkat pendidikan</option>
+                        <option value="SD">SD (Sekolah Dasar)</option>
+                        <option value="SMP">SMP (Sekolah Menengah Pertama)</option>
+                        <option value="SMA">SMA (Sekolah Menengah Atas)</option>
+                    </select>
+                </div>
+                
+                <button onclick="continueToTestType()" 
+                        class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mt-6">
+                    Lanjutkan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Type Selection Page -->
+    <div id="testTypePage" class="hidden container mx-auto px-4 py-8 max-w-md">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Pilih Jenis Tes</h1>
+            <p class="text-gray-600 dark:text-gray-300">Pilih mode tes yang ingin Anda ikuti</p>
+        </div>
+        
+        <div class="space-y-4 fade-in">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 cursor-pointer hover:shadow-xl transition-shadow duration-200" onclick="selectTestType('practice')">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tes Latihan</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Berlatih tanpa tekanan, bisa diulang</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 cursor-pointer hover:shadow-xl transition-shadow duration-200" onclick="selectTestType('actual')">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tes Sebenarnya</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Tes resmi, hanya satu kesempatan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="showDashboard()" 
+                class="w-full mt-6 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg transition-colors duration-200">
+            Kembali ke Dashboard
+        </button>
+    </div>
+
+    <!-- Lesson Selection Page -->
+    <div id="lessonPage" class="hidden container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Pilih Mata Pelajaran</h1>
+            <p class="text-gray-600 dark:text-gray-300">Pilih mata pelajaran yang ingin Anda tes</p>
+            <div id="levelInfo" class="mt-2 text-sm text-primary font-semibold"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
+            <!-- English Gift Card -->
+            <div class="gift-card gift-card-english rounded-xl p-6 cursor-pointer text-white" onclick="selectLesson('english')">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.01-4.65.51-6.81-1.66-2.34-4.15-3.13-6.9-1.09l-.27.25c-1.13-1.51-1.17-3.67-.1-5.29l-.9-.8c-1.63 2.25-1.56 5.41.17 7.42L.8 8.78l.79.9 2.47-2.46c2.34 1.56 4.85 1.51 6.9-.1.1-.08.2-.16.3-.25.15-.17.28-.36.4-.56.1.1.2.2.31.31l2.54 2.5c.73-.72 1.9-.72 2.63 0 .74.72.74 1.9 0 2.63-.74.73-1.91.73-2.64.01zm-.78-.78l2.54 2.51c1.5 1.51 1.5 3.94 0 5.44-1.5 1.51-3.93 1.51-5.44 0l-2.54-2.51.03-.03c1.74-1.94 2.01-4.65.51-6.81-.45-.64-.99-1.15-1.58-1.56l.9-.9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Bahasa Inggris</h3>
+                    <p class="text-sm opacity-90 mb-4">Test kemampuan Bahasa Inggris Anda</p>
+                    <div class="bg-white bg-opacity-20 rounded-full px-4 py-1 text-sm">
+                        Tersedia
+                    </div>
+                </div>
+            </div>
+
+            <!-- Math Gift Card -->
+            <div class="gift-card gift-card-math rounded-xl p-6 cursor-pointer text-white" onclick="selectLesson('math')">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H9v-2h5v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Matematika</h3>
+                    <p class="text-sm opacity-90 mb-4">Test kemampuan Matematika Anda</p>
+                    <div class="bg-white bg-opacity-20 rounded-full px-4 py-1 text-sm">
+                        Tersedia
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indonesian Gift Card (Coming Soon) -->
+            <div class="gift-card gift-card-coming-soon rounded-xl p-6 cursor-not-allowed text-white">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 14H9v-2h6v2zm3-4H6v-2h12v2zm0-4H6V6h12v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Bahasa Indonesia</h3>
+                    <p class="text-sm opacity-90 mb-4">Test kemampuan Bahasa Indonesia Anda</p>
+                    <div class="bg-white bg-opacity-20 rounded-full px-4 py-1 text-sm">
+                        Segera Hadir
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physics Gift Card (Coming Soon, only for SMA) -->
+            <div id="physicsCard" class="hidden gift-card gift-card-coming-soon rounded-xl p-6 cursor-not-allowed text-white">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Fisika</h3>
+                    <p class="text-sm opacity-90 mb-4">Test kemampuan Fisika Anda</p>
+                    <div class="bg-white bg-opacity-20 rounded-full px-4 py-1 text-sm">
+                        Segera Hadir
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center mt-8">
+            <button onclick="backToTestType()" 
+                    class="px-8 py-3 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-300 font-semibold rounded-lg transition-colors duration-200">
+                Kembali
+            </button>
+        </div>
+    </div>
+
+    <!-- Test Page -->
+    <div id="testPage" class="hidden container mx-auto px-4 py-4 max-w-2xl">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-4">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Soal </span>
+                    <span id="currentQuestion" class="font-semibold text-gray-800 dark:text-white">1</span>
+                    <span class="text-gray-600 dark:text-gray-400"> dari 20</span>
+                </div>
+                <div id="timer" class="text-lg font-bold text-primary">30:00</div>
+            </div>
+            
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-6">
+                <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 5%"></div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div id="questionContainer">
+                <h2 id="questionText" class="text-lg font-semibold text-gray-800 dark:text-white mb-6"></h2>
+                <div id="optionsContainer" class="space-y-3"></div>
+            </div>
+            
+            <div class="flex justify-between mt-8">
+                <button id="prevBtn" onclick="previousQuestion()" 
+                        class="px-6 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
+                    Sebelumnya
+                </button>
+                <button id="nextBtn" onclick="nextQuestion()" 
+                        class="px-6 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg transition-colors duration-200">
+                    Selanjutnya
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="resultsPage" class="hidden container mx-auto px-4 py-8 max-w-4xl">
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Hasil Tes</h1>
+            <div id="scoreInfo" class="text-xl text-gray-600 dark:text-gray-300"></div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
+                    <div id="correctCount" class="text-2xl font-bold text-green-600 dark:text-green-400">0</div>
+                    <div class="text-sm text-green-600 dark:text-green-400">Benar</div>
+                </div>
+                <div class="bg-red-50 dark:bg-red-900 p-4 rounded-lg">
+                    <div id="wrongCount" class="text-2xl font-bold text-red-600 dark:text-red-400">0</div>
+                    <div class="text-sm text-red-600 dark:text-red-400">Salah</div>
+                </div>
+                <div class="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg">
+                    <div id="unansweredCount" class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">0</div>
+                    <div class="text-sm text-yellow-600 dark:text-yellow-400">Tidak Dijawab</div>
+                </div>
+                <div class="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+                    <div id="scorePercentage" class="text-2xl font-bold text-blue-600 dark:text-blue-400">0%</div>
+                    <div class="text-sm text-blue-600 dark:text-blue-400">Nilai</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Detail Jawaban</h3>
+            <div id="detailedResults" class="space-y-4 max-h-96 overflow-y-auto"></div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button id="redoBtn" onclick="redoTest()" 
+                    class="hidden px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200">
+                Ulangi Tes
+            </button>
+            <button onclick="backToDashboard()" 
+                    class="px-8 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors duration-200">
+                Kembali ke Dashboard
+            </button>
+            <button onclick="exitTest()" 
+                    class="px-8 py-3 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors duration-200">
+                Keluar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        async function fetchQuestionsFromDatabase(subject, educationLevel) {
+    try {
+        // Build URL with query parameters
+        const params = new URLSearchParams();
+        if (subject) params.append('subject', subject);
+        if (educationLevel) params.append('education_level', educationLevel);
+        
+        const url = `/get-questions?${params.toString()}`;
+        const response = await fetch(url); // Flask endpoint with parameters
+        if (!response.ok) throw new Error("Failed to fetch questions");
+
+        const questions = await response.json();
+        
+        // If we get more than 20 questions, randomly select 20
+        if (questions.length > 20) {
+            const shuffled = questions.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 20);
+        }
+        
+        return questions;
+    } catch (error) {
+        console.error("Error fetching questions:", error);
+        return [];
+    }
+}
+        
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Database simulation using localStorage
+        let currentUser = null;
+        let testSession = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timeLeft = 1800; // 30 minutes in seconds
+        let timerInterval;
+        let testStarted = false;
+        let testStartTime = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDatabase();
+            checkLoggedInUser();
+        });
+
+        function initializeDatabase() {
+            // Initialize localStorage structure if not exists
+            if (!localStorage.getItem('testUsers')) {
+                localStorage.setItem('testUsers', JSON.stringify({}));
+            }
+            if (!localStorage.getItem('testResults')) {
+                localStorage.setItem('testResults', JSON.stringify([]));
+            }
+            if (!localStorage.getItem('testSessions')) {
+                localStorage.setItem('testSessions', JSON.stringify([]));
+            }
+        }
+
+        function checkLoggedInUser() {
+            const savedUser = localStorage.getItem('currentTestUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            } else {
+                showLoginPage();
+            }
+        }
+
+        function loginUser() {
+            const name = document.getElementById('loginName').value.trim();
+            if (!name) {
+                showCustomAlert('Silakan masukkan nama Anda');
+                return;
+            }
+
+            // Get or create user
+            const users = JSON.parse(localStorage.getItem('testUsers'));
+            if (!users[name]) {
+                users[name] = {
+                    name: name,
+                    joinDate: new Date().toISOString(),
+                    totalTests: 0,
+                    totalScore: 0,
+                    bestScore: 0
+                };
+                localStorage.setItem('testUsers', JSON.stringify(users));
+            }
+
+            currentUser = users[name];
+            localStorage.setItem('currentTestUser', JSON.stringify(currentUser));
+            showDashboard();
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentTestUser');
+            showLoginPage();
+        }
+
+        function showLoginPage() {
+            hideAllPages();
+            document.getElementById('loginPage').classList.remove('hidden');
+        }
+
+        function showDashboard() {
+            hideAllPages();
+            document.getElementById('dashboardPage').classList.remove('hidden');
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            if (!currentUser) return;
+
+            document.getElementById('welcomeText').textContent = `Selamat datang, ${currentUser.name}!`;
+            
+            // Calculate user statistics
+            const results = JSON.parse(localStorage.getItem('testResults'));
+            const userResults = results.filter(r => r.student_name === currentUser.name);
+            
+            const totalTests = userResults.length;
+            const avgScore = totalTests > 0 ? Math.round(userResults.reduce((sum, r) => sum + r.score_percentage, 0) / totalTests) : 0;
+            const bestScore = totalTests > 0 ? Math.max(...userResults.map(r => r.score_percentage)) : 0;
+
+            document.getElementById('totalTests').textContent = totalTests;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+            document.getElementById('bestScore').textContent = bestScore + '%';
+
+            // Update user history
+            const historyContainer = document.getElementById('userHistory');
+            historyContainer.innerHTML = '';
+
+            if (userResults.length === 0) {
+                historyContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center">Belum ada riwayat tes</p>';
+            } else {
+                userResults.sort((a, b) => new Date(b.completed_at) - new Date(a.completed_at));
+                userResults.slice(0, 10).forEach(result => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'p-4 border border-gray-200 dark:border-gray-700 rounded-lg';
+                    
+                    const date = new Date(result.completed_at).toLocaleDateString('id-ID');
+                    const time = formatTime(result.time_taken);
+                    const subjectName = result.subject === 'english' ? 'Bahasa Inggris' : 'Matematika';
+                    const testTypeName = result.test_type === 'practice' ? 'Latihan' : 'Sebenarnya';
+                    
+                    resultDiv.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-medium text-gray-800 dark:text-white">${subjectName} (${result.education_level})</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">${testTypeName} • ${date} • ${time}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold ${result.score_percentage >= 80 ? 'text-green-600 dark:text-green-400' : result.score_percentage >= 60 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'}">${result.score_percentage}%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">${result.correct_answers}/${result.total_questions}</div>
+                            </div>
+                        </div>
+                    `;
+                    historyContainer.appendChild(resultDiv);
+                });
+            }
+        }
+
+        function startNewTest() {
+            // Reset form values
+            document.getElementById('studentName').value = currentUser.name;
+            document.getElementById('educationLevel').value = '';
+            
+            hideAllPages();
+            document.getElementById('homePage').classList.remove('hidden');
+        }
+
+        function showLeaderboard() {
+            hideAllPages();
+            document.getElementById('leaderboardPage').classList.remove('hidden');
+            updateLeaderboard();
+        }
+
+        function updateLeaderboard() {
+            const subject = document.getElementById('leaderboardSubject').value;
+            const education = document.getElementById('leaderboardEducation').value;
+            
+            const results = JSON.parse(localStorage.getItem('testResults'));
+            let filteredResults = results;
+            
+            if (subject !== 'all') {
+                filteredResults = filteredResults.filter(r => r.subject === subject);
+            }
+            if (education !== 'all') {
+                filteredResults = filteredResults.filter(r => r.education_level === education);
+            }
+            
+            // Sort by score and time
+            filteredResults.sort((a, b) => {
+                if (b.score_percentage !== a.score_percentage) {
+                    return b.score_percentage - a.score_percentage;
+                }
+                return a.time_taken - b.time_taken;
+            });
+            
+            const top10 = filteredResults.slice(0, 10);
+            const leaderboardContent = document.getElementById('leaderboardContent');
+            leaderboardContent.innerHTML = '';
+            
+            if (top10.length === 0) {
+                leaderboardContent.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center">Belum ada data untuk filter ini</p>';
+                return;
+            }
+            
+            top10.forEach((result, index) => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = `p-4 border border-gray-200 dark:border-gray-700 rounded-lg ${result.student_name === currentUser?.name ? 'bg-blue-50 dark:bg-blue-900' : ''}`;
+                
+                const date = new Date(result.completed_at).toLocaleDateString('id-ID');
+                const time = formatTime(result.time_taken);
+                const subjectName = result.subject === 'english' ? 'Bahasa Inggris' : 'Matematika';
+                
+                let rankIcon = '';
+                if (index === 0) rankIcon = '🥇';
+                else if (index === 1) rankIcon = '🥈';
+                else if (index === 2) rankIcon = '🥉';
+                else rankIcon = `#${index + 1}`;
+                
+                resultDiv.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center">
+                            <div class="text-2xl mr-3">${rankIcon}</div>
+                            <div>
+                                <div class="font-medium text-gray-800 dark:text-white">${result.student_name}</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">${subjectName} (${result.education_level}) • ${date}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold ${result.score_percentage >= 80 ? 'text-green-600 dark:text-green-400' : result.score_percentage >= 60 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'}">${result.score_percentage}%</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">${time}</div>
+                        </div>
+                    </div>
+                `;
+                leaderboardContent.appendChild(resultDiv);
+            });
+        }
+
+        function goBackFromLeaderboard() {
+            if (currentUser) {
+                showDashboard();
+            } else {
+                showLoginPage();
+            }
+        }
+
+        function hideAllPages() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('leaderboardPage').classList.add('hidden');
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('testTypePage').classList.add('hidden');
+            document.getElementById('lessonPage').classList.add('hidden');
+            document.getElementById('testPage').classList.add('hidden');
+            document.getElementById('resultsPage').classList.add('hidden');
+        }
+
+        function continueToTestType() {
+            const name = document.getElementById('studentName').value.trim();
+            const education = document.getElementById('educationLevel').value;
+
+            if (!name) {
+                showCustomAlert('Silakan masukkan nama Anda');
+                return;
+            }
+
+            if (!education) {
+                showCustomAlert('Silakan pilih tingkat pendidikan');
+                return;
+            }
+
+            // Update current session info
+            testSession = {
+                student_name: name,
+                education_level: education,
+                test_type: '',
+                subject: ''
+            };
+
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('testTypePage').classList.remove('hidden');
+        }
+
+        function selectTestType(type) {
+            testSession.test_type = type;
+            showLessonSelection();
+        }
+
+        function showLessonSelection() {
+            document.getElementById('testTypePage').classList.add('hidden');
+            document.getElementById('lessonPage').classList.remove('hidden');
+            
+            // Update level info
+            const testTypeText = testSession.test_type === 'practice' ? 'Tes Latihan' : 'Tes Sebenarnya';
+            document.getElementById('levelInfo').textContent = `${testSession.education_level} - ${testTypeText}`;
+            
+            // Show physics card only for SMA
+            if (testSession.education_level === 'SMA') {
+                document.getElementById('physicsCard').classList.remove('hidden');
+            } else {
+                document.getElementById('physicsCard').classList.add('hidden');
+            }
+        }
+
+        function selectLesson(subject) {
+            if (subject === 'english' || subject === 'math') {
+                testSession.subject = subject;
+                initializeTest();
+            } else {
+                showCustomAlert('Mata pelajaran ini belum tersedia. Silakan pilih Bahasa Inggris atau Matematika.');
+            }
+        }
+
+        async function initializeTest() {
+    currentQuestionIndex = 0;
+    userAnswers = new Array(20).fill(-1);
+    timeLeft = 1800;
+    testStarted = true;
+    testStartTime = Date.now();
+
+    // Create test session
+    testSession.id = 'session_' + Date.now();
+    testSession.start_time = new Date().toISOString();
+    testSession.status = 'in_progress';
+
+    // Show loading state
+    document.getElementById('lessonPage').classList.add('hidden');
+    document.getElementById('testPage').classList.remove('hidden');
+    
+    // Show loading message
+    document.getElementById('questionText').textContent = 'Memuat soal...';
+    document.getElementById('optionsContainer').innerHTML = '<div class="text-center text-gray-500">Sedang memuat soal dari database...</div>';
+
+    try {
+        // Fetch questions from database
+        currentQuestions = await fetchQuestionsFromDatabase(testSession.subject, testSession.education_level);
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            throw new Error('Tidak ada soal yang ditemukan');
+        }
+
+        // Adjust userAnswers array to match actual question count
+        userAnswers = new Array(currentQuestions.length).fill(-1);
+
+        showQuestion();
+        startTimer();
+    } catch (error) {
+        console.error('Error initializing test:', error);
+        showCustomAlert('Gagal memuat tes: ' + error.message);
+        
+        // Go back to lesson selection
+        document.getElementById('testPage').classList.add('hidden');
+        document.getElementById('lessonPage').classList.remove('hidden');
+        resetTest();
+    }
+}
+
+        function shuffleQuestions() {
+            for (let i = currentQuestions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentQuestions[i], currentQuestions[j]] = [currentQuestions[j], currentQuestions[i]];
+            }
+        }
+
+        function showQuestion() {
+    if (!currentQuestions || currentQuestions.length === 0) {
+        showCustomAlert('Tidak ada soal yang tersedia');
+        return;
+    }
+
+    const question = currentQuestions[currentQuestionIndex];
+    document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+    document.getElementById('questionText').textContent = question.question;
+
+    const optionsContainer = document.getElementById('optionsContainer');
+    optionsContainer.innerHTML = '';
+
+    question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = `p-4 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${userAnswers[currentQuestionIndex] === index ? 'bg-primary text-white border-primary' : ''}`;
+        optionDiv.innerHTML = `
+            <label class="flex items-center cursor-pointer">
+                <input type="radio" name="answer" value="${index}" class="mr-3" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                ${option}
+            </label>
+        `;
+        optionDiv.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(optionDiv);
+    });
+
+    document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+    document.getElementById('nextBtn').textContent = currentQuestionIndex === currentQuestions.length - 1 ? 'Selesai' : 'Selanjutnya';
+
+    // Update progress bar based on actual question count
+    const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+    
+    // Update question counter display
+    const questionCounter = document.querySelector('#testPage .text-sm');
+    if (questionCounter) {
+        questionCounter.innerHTML = `Soal <span id="currentQuestion" class="font-semibold text-gray-800 dark:text-white">${currentQuestionIndex + 1}</span><span class="text-gray-600 dark:text-gray-400"> dari ${currentQuestions.length}</span>`;
+    }
+}
+
+        function selectAnswer(answerIndex) {
+            userAnswers[currentQuestionIndex] = answerIndex;
+            
+            // Update radio buttons and styling
+            const options = document.querySelectorAll('#optionsContainer > div');
+            options.forEach((option, index) => {
+                const radio = option.querySelector('input[type="radio"]');
+                if (index === answerIndex) {
+                    option.className = 'p-4 border border-primary rounded-lg cursor-pointer bg-primary text-white transition-colors duration-200';
+                    radio.checked = true;
+                } else {
+                    option.className = 'p-4 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200';
+                    radio.checked = false;
+                }
+            });
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        function backToTestType() {
+            document.getElementById('lessonPage').classList.add('hidden');
+            document.getElementById('testTypePage').classList.remove('hidden');
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft <= 300) { // 5 minutes warning
+                    document.getElementById('timer').classList.add('timer-warning', 'text-red-500');
+                }
+
+                if (timeLeft <= 0) {
+                    finishTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishTest() {
+            clearInterval(timerInterval);
+            testStarted = false;
+
+            // Calculate results
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            let unanswered = 0;
+
+            currentQuestions.forEach((question, index) => {
+                if (userAnswers[index] === -1) {
+                    unanswered++;
+                } else if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
+                }
+            });
+
+            const scorePercentage = Math.round((correctAnswers / currentQuestions.length) * 100);
+            const timeTaken = Math.round((Date.now() - testStartTime) / 1000);
+
+            // Save test result
+            const testResult = {
+                id: 'result_' + Date.now(),
+                session_id: testSession.id,
+                student_name: testSession.student_name,
+                education_level: testSession.education_level,
+                subject: testSession.subject,
+                test_type: testSession.test_type,
+                total_questions: currentQuestions.length,
+                correct_answers: correctAnswers,
+                wrong_answers: wrongAnswers,
+                unanswered: unanswered,
+                score_percentage: scorePercentage,
+                time_taken: timeTaken,
+                completed_at: new Date().toISOString()
+            };
+
+            // Update localStorage
+            const results = JSON.parse(localStorage.getItem('testResults'));
+            results.push(testResult);
+            localStorage.setItem('testResults', JSON.stringify(results));
+
+            // Update session
+            testSession.end_time = new Date().toISOString();
+            testSession.status = 'completed';
+            const sessions = JSON.parse(localStorage.getItem('testSessions'));
+            sessions.push(testSession);
+            localStorage.setItem('testSessions', JSON.stringify(sessions));
+
+            // Update user statistics
+            if (currentUser) {
+                const users = JSON.parse(localStorage.getItem('testUsers'));
+                const user = users[currentUser.name];
+                user.totalTests++;
+                user.totalScore += scorePercentage;
+                if (scorePercentage > user.bestScore) {
+                    user.bestScore = scorePercentage;
+                }
+                users[currentUser.name] = user;
+                localStorage.setItem('testUsers', JSON.stringify(users));
+                currentUser = user;
+                localStorage.setItem('currentTestUser', JSON.stringify(currentUser));
+            }
+
+            document.getElementById('testPage').classList.add('hidden');
+            document.getElementById('resultsPage').classList.remove('hidden');
+
+            showResults();
+        }
+
+        function showResults() {
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            let unanswered = 0;
+
+            currentQuestions.forEach((question, index) => {
+                if (userAnswers[index] === -1) {
+                    unanswered++;
+                } else if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
+                }
+            });
+
+            const scorePercentage = Math.round((correctAnswers / currentQuestions.length) * 100);
+
+            const subjectName = testSession.subject === 'english' ? 'Bahasa Inggris' : 'Matematika';
+            document.getElementById('scoreInfo').textContent = 
+                `${testSession.student_name} (${testSession.education_level}) - ${subjectName} - ${testSession.test_type === 'practice' ? 'Tes Latihan' : 'Tes Sebenarnya'}`;
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('wrongCount').textContent = wrongAnswers;
+            document.getElementById('unansweredCount').textContent = unanswered;
+            document.getElementById('scorePercentage').textContent = scorePercentage + '%';
+
+            // Show detailed results
+            const detailedResults = document.getElementById('detailedResults');
+            detailedResults.innerHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const resultDiv = document.createElement('div');
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+                const isUnanswered = userAnswer === -1;
+
+                let statusColor, statusIcon, statusText;
+                if (isUnanswered) {
+                    statusColor = 'text-yellow-600 dark:text-yellow-400';
+                    statusIcon = '⚪';
+                    statusText = 'Tidak Dijawab';
+                } else if (isCorrect) {
+                    statusColor = 'text-green-600 dark:text-green-400';
+                    statusIcon = '✅';
+                    statusText = 'Benar';
+                } else {
+                    statusColor = 'text-red-600 dark:text-red-400';
+                    statusIcon = '❌';
+                    statusText = 'Salah';
+                }
+
+                resultDiv.className = 'p-4 border border-gray-200 dark:border-gray-700 rounded-lg';
+                resultDiv.innerHTML = `
+                    <div class="flex items-start justify-between mb-2">
+                        <span class="font-medium text-gray-800 dark:text-white">Soal ${index + 1}</span>
+                        <span class="${statusColor} font-semibold">${statusIcon} ${statusText}</span>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 mb-2">${question.question}</p>
+                    <div class="text-sm space-y-1">
+                        <div class="text-green-600 dark:text-green-400">
+                            <strong>Jawaban Benar:</strong> ${question.options[question.correct]}
+                        </div>
+                        ${!isUnanswered ? `
+                            <div class="${isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
+                                <strong>Jawaban Anda:</strong> ${question.options[userAnswer]}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                detailedResults.appendChild(resultDiv);
+            });
+
+            // Show redo button only for practice tests
+            if (testSession.test_type === 'practice') {
+                document.getElementById('redoBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('redoBtn').classList.add('hidden');
+            }
+        }
+
+        function redoTest() {
+            if (testSession.test_type === 'practice') {
+                document.getElementById('resultsPage').classList.add('hidden');
+                initializeTest();
+            }
+        }
+
+        function backToDashboard() {
+            if (currentUser) {
+                showDashboard();
+            } else {
+                showLoginPage();
+            }
+            resetTest();
+        }
+
+        function exitTest() {
+            showLoginPage();
+            resetTest();
+        }
+
+        function resetTest() {
+            clearInterval(timerInterval);
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            timeLeft = 1800;
+            testStarted = false;
+            testStartTime = null;
+            currentQuestions = [];
+            testSession = null;
+            document.getElementById('studentName').value = '';
+            document.getElementById('educationLevel').value = '';
+            document.getElementById('timer').classList.remove('timer-warning', 'text-red-500');
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function showCustomAlert(message) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">${message}</p>
+                    <div class="flex justify-end">
+                        <button class="px-4 py-2 bg-primary text-white hover:bg-primary-dark rounded" onclick="this.closest('.fixed').remove()">OK</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Prevent page refresh during test
+        window.addEventListener('beforeunload', function (e) {
+            if (testStarted) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+    </script>
+</body>
+</html>
