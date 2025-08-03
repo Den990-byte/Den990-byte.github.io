@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Database connection
-$host = 'https://den990-byte.github.io/';
-$dbname = 'test_website'; // Your database name
-$username = 'root'; // Your database username
-$password = ''; // Your database password
+$host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com';
+$dbname = 'testwebsite'; // Your database name
+$username = 'avnadmin'; // Your database username
+$password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
