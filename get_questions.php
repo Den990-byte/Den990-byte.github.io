@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Database connection
 $host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061';
-$dbname = 'testwebsite'; // Your database name
+$dbname = 'test website'; // Your database name
 $username = 'avnadmin'; // Your database username
 $password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
 
