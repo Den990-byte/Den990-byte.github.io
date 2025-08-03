@@ -13,8 +13,8 @@ $host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061';
 $dbname = 'testwebsite'; // Your database name
 $username = 'avnadmin'; // Your database username
 $password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
-testwebsite
-$message = "wrong answer";
+
+$message = "testwebsite";
 echo "<script type='text/javascript'>alert('$message');</script>";
 
 try {
