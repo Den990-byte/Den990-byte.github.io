@@ -19,7 +19,7 @@ def get_questions():
             host="https://den990-byte.github.io/",
             user="root",         
             password="",         
-            database="test website"  
+            database="test_website"  
         )
         cursor = conn.cursor(dictionary=True)
         
