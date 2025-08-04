@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $caCertPath = 'C:\\Users\\Dennis\\Downloads\\ca-cert.pem';
 
 // Database connection
-$host = 'sql112.infinityfree.com'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
+$host = 'sql112.infinityfree.com:3306'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
 $dbname = 'if0_39628362_testing'; // Your database name
 $username = 'if0_39628362'; // Your database username
 $password = 'J6ypUNicWCXMt4'; // Your database password
