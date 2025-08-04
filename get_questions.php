@@ -7,7 +7,6 @@ header('Access-Control-Allow-Headers: Content-Type');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
-$caCertPath = 'C:\\Users\\Dennis\\Downloads\\ca-cert.pem';
 
 // Database connection
 $host = 'sql112.infinityfree.com:3306'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
