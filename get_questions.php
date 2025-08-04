@@ -10,13 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $caCertPath = 'C:\\Users\\Dennis\\Downloads\\ca-cert.pem';
 
 // Database connection
-$host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com'; //:21061
-$dbname = 'testwebsite'; // Your database name
-$username = 'avnadmin'; // Your database username
-$password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
-
-$message = "testwebsite";
-echo "<script type='text/javascript'>alert('$message');</script>";
+$host = 'sql112.infinityfree.com'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
+$dbname = 'if0_39628362_testing'; // Your database name
+$username = 'if0_39628362'; // Your database username
+$password = 'J6ypUNicWCXMt4'; // Your database password
 
 try {
     $pdo = new PDO("mysql:host=$host;port=21061;dbname=$dbname;charset=utf8mb4", $username, $password, [
