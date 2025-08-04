@@ -9,10 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Database connection
-$host = 'sql112.infinityfree.com:3306'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
-$dbname = 'if0_39628362_testing'; // Your database name
-$username = 'if0_39628362'; // Your database username
-$password = 'J6ypUNicWCXMt4'; // Your database password
+//$host = 'sql112.infinityfree.com:3306'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
+//$dbname = 'if0_39628362_testing'; // Your database name
+//$username = 'if0_39628362'; // Your database username
+//$password = 'J6ypUNicWCXMt4'; // Your database password
+
+$host = 'dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061'; //dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com:21061
+$dbname = 'defaultdb'; // Your database name
+$username = 'avnadmin'; // Your database username
+$password = 'AVNS_EAXcIoeolpK4AaywvrL'; // Your database password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
