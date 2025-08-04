@@ -442,6 +442,7 @@
         async function fetchQuestionsFromDatabase(subject, educationLevel) {
             try {
                 // Build URL with query parameters
+                showCustomAlert('testing time: 2:41');
                 const params = new URLSearchParams();
                 if (subject) params.append('subject', subject);
                 if (educationLevel) params.append('education_level', educationLevel);
