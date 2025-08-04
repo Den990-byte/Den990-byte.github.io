@@ -15,7 +15,8 @@ def get_questions():
         subject = request.args.get('subject')
         education_level = request.args.get('education_level')
         
-        # Use environment variables
+        print(f"BACKEND: Received request - subject: '{subject}', education_level: '{education_level}'")
+        
         conn = mysql.connector.connect(
             host=os.getenv('DB_HOST'),
             port=int(os.getenv('DB_PORT')),
@@ -50,10 +51,15 @@ def get_questions():
             LIMIT 20
         """
         
+        print(f"BACKEND: Executing query: {query}")
+        print(f"BACKEND: With parameters: {params}")
+        
         cursor.execute(query, params)
         rows = cursor.fetchall()
         cursor.close()
         conn.close()
+
+        print(f"BACKEND: Found {len(rows)} rows in database")
 
         questions = []
         for row in rows:
@@ -66,13 +72,11 @@ def get_questions():
                 "correct": correct_answer_index  
             })
 
+        print(f"BACKEND: Returning {len(questions)} questions")
         return jsonify(questions)
-    except mysql.connector.Error as err:
-        print(f"Database error: {err}")
-        return jsonify({"error": str(err)}), 500
     except Exception as e:
-        print(f"Unexpected error: {e}")
-        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+        print(f"BACKEND ERROR: {e}")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/favicon.ico')
 def favicon():
