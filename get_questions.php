@@ -16,7 +16,7 @@ $username = 'if0_39628362'; // Your database username
 $password = 'J6ypUNicWCXMt4'; // Your database password
 
 try {
-    $pdo = new PDO("mysql:host=$host;port=21061;dbname=$dbname;charset=utf8mb4", $username, $password, [
+    $pdo = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8mb4", $username, $password, [
         PDO::MYSQL_ATTR_SSL_CA => $caCertPath,
     ]);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
