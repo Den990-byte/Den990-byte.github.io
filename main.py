@@ -20,8 +20,9 @@ def get_questions():
             port=21061,
             user="avnadmin",         
             password="AVNS_EAXcIoeolpK4AaywvrL",         
-            database="defaultdb",
-            ssl_ca='/Users/yourusername/Downloads/ca-cert.pem'  # Adjust the path
+            database="defaultdb",  # Changed from "testwebsite" to match your actual database
+            ssl_disabled=False,
+            ssl_verify_cert=True  # This handles SSL properly without needing certificate file
         )
         cursor = conn.cursor(dictionary=True)
 
@@ -66,7 +67,11 @@ def get_questions():
 
         return jsonify(questions)
     except mysql.connector.Error as err:
+        print(f"Database error: {err}")
         return jsonify({"error": str(err)}), 500
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 @app.route('/favicon.ico')
 def favicon():
