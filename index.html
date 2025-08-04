@@ -446,7 +446,7 @@
                 if (subject) params.append('subject', subject);
                 if (educationLevel) params.append('education_level', educationLevel);
                 
-                const url = /get-questions?${params.toString()};
+                const url = '/get-questions?${params.toString()}';
                 const response = await fetch(url); // Flask endpoint with parameters
                 if (!response.ok) throw new Error("Failed to fetch questions");
         
