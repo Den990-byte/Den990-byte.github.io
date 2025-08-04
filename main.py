@@ -18,11 +18,11 @@ def get_questions():
         print(f"BACKEND: Received request - subject: '{subject}', education_level: '{education_level}'")
         
         conn = mysql.connector.connect(
-            host=os.getenv('DB_HOST'),
-            port=int(os.getenv('DB_PORT')),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
-            database=os.getenv('DB_NAME'),
+            host=os.getenv('sql112.infinityfree.com'),
+            port=int(os.getenv('3306')),
+            user=os.getenv('if0_39628362'),
+            password=os.getenv('J6ypUNicWCXMt4'),
+            database=os.getenv('if0_39628362_testing'),
             ssl_disabled=False,
             ssl_verify_cert=True
         )
