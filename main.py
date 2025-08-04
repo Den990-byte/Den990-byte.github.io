@@ -15,14 +15,15 @@ def get_questions():
         subject = request.args.get('subject')
         education_level = request.args.get('education_level')
         
+        # Use environment variables
         conn = mysql.connector.connect(
-            host="dbwebsitepi-dennisluisky228-a11d.d.aivencloud.com", 
-            port=21061,
-            user="avnadmin",         
-            password="AVNS_EAXcIoeolpK4AaywvrL",         
-            database="defaultdb",  # Changed from "testwebsite" to match your actual database
+            host=os.getenv('DB_HOST'),
+            port=int(os.getenv('DB_PORT')),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            database=os.getenv('DB_NAME'),
             ssl_disabled=False,
-            ssl_verify_cert=True  # This handles SSL properly without needing certificate file
+            ssl_verify_cert=True
         )
         cursor = conn.cursor(dictionary=True)
 
@@ -77,7 +78,6 @@ def get_questions():
 def favicon():
     return '', 204
 
+# For Vercel
 if __name__ == '__main__':
-    print("🚀 Starting Exam Website...")
-    print("📱 Visit: http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run()
